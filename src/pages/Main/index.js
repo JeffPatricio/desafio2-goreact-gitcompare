@@ -10,11 +10,12 @@ class Main extends Component {
 
   state = {
     repositories: [],
-    repositoryInput: "",
-    repositoryError: false,
     repositoriesAdded: [],
+    repositoriesUpdating: [],
+    repositoryError: false,
+    loading: false,
+    repositoryInput: "",
     msgError: "",
-    loading: false
   }
 
   addNewRepository = async (e) => {
@@ -73,6 +74,37 @@ class Main extends Component {
 
   }
 
+  updateRepository = async (name) => {
+    await this.setState({
+      repositoriesUpdating: [...this.state.repositoriesUpdating, name]
+    });
+
+    const { repositories, repositoriesUpdating } = this.state;
+
+    const { data: repository } = await Api.get(`/repos/${name}`);
+    repository.lastCommit = moment(repository.pushed_at).fromNow();
+
+    const index = repositories.findIndex(rep => `${rep.full_name}` === `${name}`);
+    repositories[index] = repository;
+
+    setTimeout(async () => {
+
+      const repUpdatingFilter = repositoriesUpdating.filter(rep => `${rep.full_name}` === `${name}`);
+
+      await this.setState({
+        repositories: repositories,
+        repositoriesUpdating: repUpdatingFilter,
+        repositoryInput: "",
+        repositoryError: false,
+        msgError: "",
+        loading: false
+      });
+
+      Storage.storeRepositories(this.state.repositoriesAdded, this.state.repositories);
+
+    }, 300);
+  }
+
   async componentDidMount() {
     const repositories = await Storage.recoverRepositoriesList();
     const repositoriesAdded = await Storage.recoverRepositoriesNames();
@@ -103,9 +135,14 @@ class Main extends Component {
           this.state.repositoryError ?
             (<Error><i className="fa fa-exclamation-triangle"></i> &nbsp;&nbsp;{this.state.msgError}</Error>)
             :
-            ("")
+            (null)
         }
-        <CompareList repositories={this.state.repositories} remove={this.removeRepository} />
+        <CompareList
+          repositories={this.state.repositories}
+          remove={this.removeRepository}
+          update={this.updateRepository}
+          updating={this.state.repositoriesUpdating}
+        />
       </Container>
     );
   }

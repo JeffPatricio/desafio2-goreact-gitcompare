@@ -51,11 +51,24 @@ export const Repository = styled.div`
         color: #999;
         font-style: italic;
       }
+
+      &:nth-child(2n-1){
+        background: #F5F5F5;
+      }
+
+      &:hover{
+         background: #9B65E6;
+         cursor: pointer;
+         border-left: 1px solid #fff;
+         border-right: 1px solid #fff;
+
+          small{
+            font-weight: bold;
+            color: #000;
+          }
+      }
     }
 
-    &:nth-child(2n - 1){
-      background: #F5F5F5;
-    }
   }
 `;
 
@@ -65,8 +78,6 @@ export const Delete = styled.button`
   background: #a81515;
   color: #FFF;
   border: 0;
-  font-size: 16px;
-  font-weight: bold;
   border-radius: 3px;
   cursor: pointer;
   margin: auto;
@@ -76,5 +87,15 @@ export const Delete = styled.button`
   &:hover{
     background: #fc1616;
   }
+`;
+
+export const Update = styled.button`
+  width: min-content;
+  height: min-content;
+  background: #FFF;
+  border: 0;
+  cursor: pointer;
+  margin-left: 8px;
+  margin-top: 5px;
 `;
 
