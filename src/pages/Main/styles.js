@@ -20,8 +20,8 @@ export const Form = styled.form`
     background: #FFF;
     font-size: 16px;
     color: #444;
-    border-radius: 3px;
-    border: ${props => (props.withError) ? "2px solid #f00" : 0}
+    border-radius: 5px;
+    border: ${props => (props.withError) ? "2px solid #a81515" : 0}
   }
 
   button{
@@ -43,3 +43,11 @@ export const Form = styled.form`
   }
 `;
 
+export const Error = styled.h4`
+  color: #a81515;
+  font-weight: bold;
+  background: #fff;
+  padding: 5px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+`;

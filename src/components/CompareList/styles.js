@@ -5,7 +5,6 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-top: 50px;
-
 `;
 
 export const Repository = styled.div`
@@ -29,11 +28,13 @@ export const Repository = styled.div`
     strong{
       font-size: 24px;
       margin-top: 10px;
+      text-transform: capitalize;
     }
 
     small{
       font-size: 14px;
       color: #666;
+      text-transform: capitalize;
     }
   }
 
@@ -57,3 +58,23 @@ export const Repository = styled.div`
     }
   }
 `;
+
+export const Delete = styled.button`
+  width: 80px;
+  height: 25px;
+  background: #a81515;
+  color: #FFF;
+  border: 0;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 15px;
+
+  &:hover{
+    background: #fc1616;
+  }
+`;
+

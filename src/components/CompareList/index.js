@@ -1,31 +1,17 @@
 import React, { Component } from "react";
-import { Container, Repository } from "./styles";
+import { Container, Repository, Delete } from "./styles";
 
 class CompareList extends Component {
 
-  state = {
-    repositories: []
-  }
-
-  componentDidMount() {
-    this.setState({
-      repositories: this.props.repositories
-    })
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.repositories !== prevProps.repositories) {
-      this.setState({
-        repositories: this.props.repositories
-      })
-    }
+  removeRepository = (e) => {
+    this.props.remove(e.target.value);
   }
 
   render() {
     return (
       <Container>
         {
-          this.state.repositories.map(repository => (
+          this.props.repositories.map(repository => (
             <Repository key={repository.id}>
               <header>
                 <img src={repository.owner.avatar_url} alt={repository.owner.login} />
@@ -46,12 +32,18 @@ class CompareList extends Component {
                   {repository.lastCommit} <small>Last Commit</small>
                 </li>
               </ul>
+              <Delete
+                value={repository.full_name}
+                title="Clique para excluir o repositório"
+                onClick={this.removeRepository}
+              >Delete</Delete>
             </Repository>
           ))
         }
       </Container>
     );
   }
+
 }
 
 export default CompareList;
