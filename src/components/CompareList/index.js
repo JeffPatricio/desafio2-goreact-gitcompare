@@ -13,12 +13,20 @@ class CompareList extends Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.repositories !== prevProps.repositories) {
+      this.setState({
+        repositories: this.props.repositories
+      })
+    }
+  }
+
   render() {
     return (
       <Container>
         {
           this.state.repositories.map(repository => (
-            <Repository>
+            <Repository key={repository.id}>
               <header>
                 <img src={repository.owner.avatar_url} alt={repository.owner.login} />
                 <strong>{repository.name}</strong>
@@ -35,14 +43,14 @@ class CompareList extends Component {
                   {repository.open_issues_count} <small>Issues</small>
                 </li>
                 <li>
-                  {repository.pushed_at} <small>Last Commit</small>
+                  {repository.lastCommit} <small>Last Commit</small>
                 </li>
               </ul>
             </Repository>
           ))
         }
       </Container>
-    )
+    );
   }
 }
 
